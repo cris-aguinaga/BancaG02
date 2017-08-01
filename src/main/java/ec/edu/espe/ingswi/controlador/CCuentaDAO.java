@@ -62,8 +62,8 @@ public class CCuentaDAO {
     public final void insert() {
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
-        final String auxiliar = "INSERT INTO `ingswbancario`.`cuenta` "
-                + "(`COD_CUENTA`, `CEDULA`, `TIPO`, `SALDO`, "
+        final String auxiliar = "INSERT INTO `banca`.`cuenta` "
+                + "(`CODIGO_CUENTA`, `CEDULA`, `TIPO`, `SALDO`, "
                 + "`ESTADO`) VALUES (?, ?, ?, ?, 'act');";
         try {
             sentencia = con.prepareStatement(auxiliar);
@@ -144,7 +144,7 @@ public class CCuentaDAO {
         final Connection con = conexion.getConnection();
         // select de todos las cuentas y llenado de jtable
         try {
-            sentencia = con.prepareStatement("select * from cuenta where cod_cuenta like ? or cedula like ?;");
+            sentencia = con.prepareStatement("select * from cuenta where codigo_cuenta like ? or cedula like ?;");
             sentencia.setString(1, parametro);
             sentencia.setString(2, parametro);
             final ResultSet res = sentencia.executeQuery();

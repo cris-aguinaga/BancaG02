@@ -20,11 +20,11 @@ public class Conexion {
     /**
      * Variable que tiene la clave de la BD del Sistema Bancario.
      */
-    private final String clave = "12345";
+    private final String clave = "1234";
     /**
      * Variable que tiene el url de la BD del Sistema Bancario.
      */
-    private final String url = "jdbc:mysql://localhost:3306/ventasautos?autoReconnect=true&useSSL=false";
+    private final String url = "jdbc:mysql://localhost:3306/banca?autoReconnect=true&useSSL=false";
 
     public final Connection getConnection() {
         conexion1 = null;
