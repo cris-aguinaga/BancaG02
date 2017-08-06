@@ -89,6 +89,10 @@ public class FCliente extends javax.swing.JFrame {
         txtcedula = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        txtIngreso = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblcliente = new javax.swing.JTable();
         btnactualizar = new javax.swing.JButton();
@@ -126,6 +130,12 @@ public class FCliente extends javax.swing.JFrame {
 
         jLabel3.setText("Cédula");
 
+        jLabel1.setText("Género");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
+
+        jLabel4.setText("Ingresos Mensuales");
+
         javax.swing.GroupLayout jpaneldatosLayout = new javax.swing.GroupLayout(jpaneldatos);
         jpaneldatos.setLayout(jpaneldatosLayout);
         jpaneldatosLayout.setHorizontalGroup(
@@ -134,17 +144,21 @@ public class FCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
                 .addGap(46, 46, 46)
-                .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtcedula, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIngreso))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jpaneldatosLayout.setVerticalGroup(
             jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpaneldatosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -152,7 +166,15 @@ public class FCliente extends javax.swing.JFrame {
                 .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         tblcliente.setModel(new javax.swing.table.DefaultTableModel(
@@ -243,39 +265,39 @@ public class FCliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap(406, Short.MAX_VALUE)
+                .addComponent(btnactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(btnRegresar))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
-                        .addComponent(btnRegresar))
+                        .addGap(45, 45, 45)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(93, 93, 93)
-                                .addComponent(jpaneldatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(53, Short.MAX_VALUE))))
+                        .addGap(55, 55, 55)
+                        .addComponent(jpaneldatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(333, Short.MAX_VALUE)
+                .addComponent(btnRegresar))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(249, 249, 249)
-                        .addComponent(btnRegresar))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jpaneldatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -322,15 +344,20 @@ public class FCliente extends javax.swing.JFrame {
         try {
             String cedula1 = txtcedula.getText();
             String nombre = txtnombre.getText();
+            //String genero = jComboBox1.getSelectedItem().toString();
+            //String ingreso = txtIngreso.getText();
+            //clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre,genero,Float.parseFloat(ingreso)));
             clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
             modelo.addColumn("Cliente");
             modelo.addColumn("Cédula");
             modelo.addColumn("Nombre");
+            modelo.addColumn("Género");
+            modelo.addColumn("Ingreso");
             tblcliente.setModel(modelo);
             tblcliente.setModel(clienteDAO.visualisarClientes((modelo)));
             limpiarDatos();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error de conexion a la base");
+            JOptionPane.showMessageDialog(null, "Error aqui");
             ex.printStackTrace();
         }
     }
@@ -351,10 +378,14 @@ public class FCliente extends javax.swing.JFrame {
                     validarCedula(cedula);
                     String cedula1;
                     String nombre;
+                    float ingreso;
+                    String genero;
                     if (aux == 1) {
                         cedula1 = Integer.toString(cedula);
                         nombre = txtnombre.getText();
-                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                        genero = jComboBox1.getSelectedItem().toString();
+                        ingreso = Float.parseFloat(txtIngreso.getText());
+                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre, genero, ingreso));
                         clienteDAO.buscar();
                         limpiarDatos();
                     } else {
@@ -385,10 +416,14 @@ public class FCliente extends javax.swing.JFrame {
                     validarCedula(cedula);
                     String cedula1;
                     String nombre;
+                    float ingreso;
+                    String genero;
                     if (aux == 1) {
                         cedula1 = Integer.toString(cedula);
                         nombre = txtnombre.getText();
-                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                        genero = jComboBox1.getSelectedItem().toString();
+                        ingreso = Float.parseFloat(txtIngreso.getText());
+                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre, genero, ingreso));
                         clienteDAO.actualizarClientes();
                         limpiarDatos();
                     } else {
@@ -420,10 +455,14 @@ public class FCliente extends javax.swing.JFrame {
                     validarCedula(cedula);
                     String cedula1;
                     String nombre;
+                    String genero;
+                    Float ingreso;
                     if (aux == 1) {
                         cedula1 = Integer.toString(cedula);
                         nombre = txtnombre.getText();
-                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                        genero = jComboBox1.getSelectedItem().toString();
+                        ingreso = Float.parseFloat(txtIngreso.getText());
+                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre,genero,ingreso));
                         clienteDAO.eliminarCliente();
                         limpiarDatos();
                     } else {
@@ -479,13 +518,19 @@ public class FCliente extends javax.swing.JFrame {
                     validarCedula(cedula);
                     String cedula1;
                     String nombre;
+                    String genero;
+                    float ingreso;
                     if (aux == 1) {
                         cedula1 = Integer.toString(cedula);
                         nombre = txtnombre.getText();
-                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                        genero = jComboBox1.getSelectedItem().toString();
+                        ingreso = Float.parseFloat(txtIngreso.getText());
+                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre, genero, ingreso));
                         modelo.addColumn("Cliente");
                         modelo.addColumn("Cédula");
                         modelo.addColumn("Nombre");
+                        modelo.addColumn("Genero");
+                        modelo.addColumn("Ingreso");
                         tblcliente.setModel(modelo);
                         tblcliente.setModel(clienteDAO.busquedaCedula((modelo)));
                     } else {
@@ -496,10 +541,14 @@ public class FCliente extends javax.swing.JFrame {
                 if (vacio.equals(txtcedula.getText())) {
                     String cedula1 = txtcedula.getText();
                     String nombre = txtnombre.getText();
-                    clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                    String genero = jComboBox1.getSelectedItem().toString();
+                    float ingreso = Float.parseFloat(txtIngreso.getText());
+                    clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre, genero, ingreso));
                     modelo.addColumn("Cliente");
                     modelo.addColumn("Cédula");
                     modelo.addColumn("Nombre");
+                    modelo.addColumn("Genero");
+                    modelo.addColumn("Ingreso");
                     tblcliente.setModel(modelo);
                     tblcliente.setModel(clienteDAO.busquedaNombre((modelo)));
                 } else {
@@ -508,12 +557,17 @@ public class FCliente extends javax.swing.JFrame {
                     String cedula1;
                     String nombre;
                     if (aux == 1) {
+
                         cedula1 = Integer.toString(cedula);
                         nombre = txtnombre.getText();
-                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                        String genero = jComboBox1.getSelectedItem().toString();
+                        float ingreso = Float.parseFloat(txtIngreso.getText());
+                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre, genero, ingreso));
                         modelo.addColumn("Cliente");
                         modelo.addColumn("Cédula");
                         modelo.addColumn("Nombre");
+                        modelo.addColumn("Genero");
+                        modelo.addColumn("Ingreso");
                         tblcliente.setModel(modelo);
                         tblcliente.setModel(clienteDAO.busquedaCedula((modelo)));
                     } else {
@@ -572,20 +626,15 @@ public class FCliente extends javax.swing.JFrame {
     }
 
     /**
-     * btnRegresar Boton que regresa al menu principal.
-     * btnactualizar  Boton que actualiza los datos dentro del tblcliente
-     * btnactualizarCliente Boton que actualiza datos dentro de la BD
-     * btnbuscar Boton que busca a cliente dentro de la BD
-     * btncreacionCliente  Boton que ingresa nuevos datos dentro de la BD
-     * btneliminarCliente Boton que elimina a cliente
-     * jLabel2 Label Cedula
-     * jLabel3 Label Nombre
-     * jPanel1 Panel que tiene las opciones del CRUD
-     * jScrollPane1 Espacio que contiene a tblcliente
-     * jpaneldatos Panel donde se ingresa datos del cliente
-     * tblcliente Tabla donde se muestra los datos
-     * txtcedula Cuadro de texto de cedula
-     * txtnombre Cuadro de texto de nombre
+     * btnRegresar Boton que regresa al menu principal. btnactualizar Boton que
+     * actualiza los datos dentro del tblcliente btnactualizarCliente Boton que
+     * actualiza datos dentro de la BD btnbuscar Boton que busca a cliente
+     * dentro de la BD btncreacionCliente Boton que ingresa nuevos datos dentro
+     * de la BD btneliminarCliente Boton que elimina a cliente jLabel2 Label
+     * Cedula jLabel3 Label Nombre jPanel1 Panel que tiene las opciones del CRUD
+     * jScrollPane1 Espacio que contiene a tblcliente jpaneldatos Panel donde se
+     * ingresa datos del cliente tblcliente Tabla donde se muestra los datos
+     * txtcedula Cuadro de texto de cedula txtnombre Cuadro de texto de nombre
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
@@ -594,12 +643,16 @@ public class FCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btncreacionCliente;
     private javax.swing.JButton btneliminarCliente;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpaneldatos;
     private javax.swing.JTable tblcliente;
+    private javax.swing.JTextField txtIngreso;
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables

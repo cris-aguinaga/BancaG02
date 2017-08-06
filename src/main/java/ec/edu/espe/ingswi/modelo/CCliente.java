@@ -12,6 +12,31 @@ public class CCliente {
      * Variable que acoge el nombre del usuario.
      */
     private String nombre;
+    private String genero;
+    private float ingreso;
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public float getIngreso() {
+        return ingreso;
+    }
+
+    public void setIngreso(float ingreso) {
+        this.ingreso = ingreso;
+    }
+
+    public CCliente(String cedula, String nombre, String genero, float ingreso) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.genero = genero;
+        this.ingreso = ingreso;
+    }
     /**
      * Constructor de la clase CCliente.
      * @param cedula

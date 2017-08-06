@@ -45,9 +45,11 @@ public class CClienteDAO {
         final Connection con = conexion.getConnection();
         // insertar los datos del cliente dentro de la BD
         try {
-            sentencia = con.prepareStatement("insert into cliente (cedula,nombre) values (?,?)");
+            sentencia = con.prepareStatement("insert into cliente (cedula,nombre,genero,ingreso) values (?,?,?,?)");
             sentencia.setString(1, cliente.getCedula());
             sentencia.setString(2, cliente.getNombre());
+            sentencia.setString(3, cliente.getGenero());
+            sentencia.setFloat(4, cliente.getIngreso());
             sentencia.execute();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -62,14 +64,16 @@ public class CClienteDAO {
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
         // select de todos los clientes y llenado de jtable
+        
         try {
             sentencia = con.prepareStatement("select * from cliente");
             final ResultSet res = sentencia.executeQuery();
             int cont = 0;
             while (res.next()) {
                 cont++;
-                cliente = new CCliente(res.getString(1), res.getString(2));
-                tablaClientes.addRow(new String[]{"" + cont, cliente.getCedula(), cliente.getNombre()});
+                cliente = new CCliente(res.getString(1), res.getString(2),res.getString(3),res.getFloat(4));
+                tablaClientes.addRow(new String[]{"" + cont, cliente.getCedula(), cliente.getNombre(),
+                    cliente.getGenero(),cliente.getIngreso()+""});
             }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -92,8 +96,9 @@ public class CClienteDAO {
             int cont = 0;
             while (res.next()) {
                 cont++;
-                cliente = new CCliente(res.getString(1), res.getString(2));
-                tablaClientes.addRow(new String[]{"" + cont, cliente.getCedula(), cliente.getNombre()});
+                 cliente = new CCliente(res.getString(1), res.getString(2),res.getString(3),res.getFloat(4));
+                tablaClientes.addRow(new String[]{"" + cont, cliente.getCedula(), cliente.getNombre(),
+                    cliente.getGenero(),cliente.getIngreso()+""});
             }
             if (cont == 0) {
                 JOptionPane.showMessageDialog(null, "No se encontraron clientes");
@@ -119,8 +124,9 @@ public class CClienteDAO {
             int cont = 0;
             while (res.next()) {
                 cont++;
-                cliente = new CCliente(res.getString(1), res.getString(2));
-                tablaClientes.addRow(new String[]{"" + cont, cliente.getCedula(), cliente.getNombre()});
+                 cliente = new CCliente(res.getString(1), res.getString(2),res.getString(3),res.getFloat(4));
+                tablaClientes.addRow(new String[]{"" + cont, cliente.getCedula(), cliente.getNombre(),
+                    cliente.getGenero(),cliente.getIngreso()+""});
             }
             if (cont == 0) {
                 JOptionPane.showMessageDialog(null, "No se encontraron clientes");
@@ -138,9 +144,11 @@ public class CClienteDAO {
         final Connection con = conexion.getConnection();
         // update del cliente dentro de la BD
         try {
-            sentencia = con.prepareStatement("update cliente set nombre = ?  where cedula = ?");
+            sentencia = con.prepareStatement("update cliente set nombre = ?,genero=?, ingreso =?  where cedula = ?");
             sentencia.setString(1, cliente.getNombre());
-            sentencia.setString(2, cliente.getCedula());
+            sentencia.setString(2,cliente.getGenero());
+            sentencia.setFloat(3, cliente.getIngreso());
+            sentencia.setString(4, cliente.getCedula());
             final int respuesta = sentencia.executeUpdate();
             if (respuesta > 0) {
                 JOptionPane.showMessageDialog(null, "Datos correctamente modificados");
