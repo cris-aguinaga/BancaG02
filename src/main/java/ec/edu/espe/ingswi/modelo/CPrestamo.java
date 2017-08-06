@@ -20,7 +20,10 @@ public class CPrestamo {
     private ResultSet resultado;
     private String cod_cuenta;
     private final Conexion conn;
-
+    
+   /**
+    * 
+    */
     public CPrestamo() {
         conn = new Conexion();
     }
@@ -39,7 +42,11 @@ public class CPrestamo {
 //        }
 //        return cod;
 //    } 
-
+    
+    /**
+     * 
+     * @return 
+     */
     public int CalculoMontoMaximo() {
         int n = 0;
         n = n * 3;
