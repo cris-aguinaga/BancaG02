@@ -18,8 +18,8 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
      */
     public FTablaAmortizacion() {
         initComponents();
-        CPrestamo obj= new CPrestamo();        
-        txtTabla.setText(obj.TAmortizacion(1000, 5, 10));
+        CPrestamo obj= new CPrestamo(); 
+        txtTabla.setText(obj.TAmortizacion(1000, 5, 10));       
     }
     /**
      * This method is called from within the constructor to initialize the form.
