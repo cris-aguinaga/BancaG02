@@ -39,6 +39,10 @@ public class CPrestamo {
         this.plazo = plazo;
     }
 
+    public CPrestamo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public double getTasaInteres() {
         return tasaInteres;
     }
