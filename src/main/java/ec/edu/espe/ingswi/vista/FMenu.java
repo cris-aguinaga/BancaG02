@@ -16,6 +16,7 @@ public class FMenu extends javax.swing.JFrame {
      */
     public FMenu() {
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     /**
@@ -34,6 +35,7 @@ public class FMenu extends javax.swing.JFrame {
         btnGestionCuentas = new javax.swing.JButton();
         btnResgistroMov = new javax.swing.JButton();
         btnConsultaMov = new javax.swing.JButton();
+        btnConsultaMov1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
@@ -94,6 +96,13 @@ public class FMenu extends javax.swing.JFrame {
             }
         });
 
+        btnConsultaMov1.setText("Simulación de prestamos");
+        btnConsultaMov1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaMov1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -104,7 +113,8 @@ public class FMenu extends javax.swing.JFrame {
                     .addComponent(btnGestionCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultaMov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnResgistroMov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btngestionCuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btngestionCuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultaMov1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,9 +126,11 @@ public class FMenu extends javax.swing.JFrame {
                 .addComponent(btnGestionCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnResgistroMov, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsultaMov, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultaMov1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,8 +158,8 @@ public class FMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -155,8 +167,8 @@ public class FMenu extends javax.swing.JFrame {
 
     private void btnGestionCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionCuentasMouseClicked
         FgestionCuentas obj = new FgestionCuentas();
-        obj.setVisible(true);               
-       dispose();
+        obj.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnGestionCuentasMouseClicked
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -168,16 +180,16 @@ public class FMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void btnResgistroMovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResgistroMovMouseClicked
-       FRegistroMovimientos obj = new FRegistroMovimientos();
-       obj.setVisible(true);              
-       dispose();
-       
+        FRegistroMovimientos obj = new FRegistroMovimientos();
+        obj.setVisible(true);
+        dispose();
+
     }//GEN-LAST:event_btnResgistroMovMouseClicked
 
     private void btngestionCuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionCuestasActionPerformed
-       FCliente obj = new FCliente();
-       obj.setVisible(true);       
-       dispose();
+        FCliente obj = new FCliente();
+        obj.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btngestionCuestasActionPerformed
 
     private void btnGestionCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionCuentasActionPerformed
@@ -189,10 +201,17 @@ public class FMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResgistroMovActionPerformed
 
     private void btnConsultaMovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaMovActionPerformed
-       FConsultaMovimientos obj = new FConsultaMovimientos();
-       obj.setVisible(true);       
-       dispose();
+        FConsultaMovimientos obj = new FConsultaMovimientos();
+        obj.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnConsultaMovActionPerformed
+
+    private void btnConsultaMov1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaMov1ActionPerformed
+        // TODO add your handling code here:
+        FPrestamo obj = new FPrestamo();
+        obj.show();
+        this.hide();
+    }//GEN-LAST:event_btnConsultaMov1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,6 +250,7 @@ public class FMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultaMov;
+    private javax.swing.JButton btnConsultaMov1;
     private javax.swing.JButton btnGestionCuentas;
     private javax.swing.JButton btnResgistroMov;
     private javax.swing.JButton btnSalir;

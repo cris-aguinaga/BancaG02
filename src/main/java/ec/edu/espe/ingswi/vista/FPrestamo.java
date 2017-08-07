@@ -6,6 +6,7 @@
 package ec.edu.espe.ingswi.vista;
 
 import ec.edu.espe.ingswi.controlador.CClienteDAO;
+import ec.edu.espe.ingswi.controlador.CPrestamoDAO;
 import ec.edu.espe.ingswi.modelo.CCliente;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
 import javax.swing.JFrame;
@@ -17,8 +18,9 @@ import javax.swing.table.DefaultTableModel;
  * @author CRIS
  */
 public class FPrestamo extends javax.swing.JFrame {
+
     FCliente obj = new FCliente();
-    CPrestamo obj2 = new CPrestamo();
+    CPrestamoDAO obj2;
     private JFrame frame = new JFrame("Mensaje de Error");
     private int aux;
     float Saldo;
@@ -29,6 +31,7 @@ public class FPrestamo extends javax.swing.JFrame {
      */
     public FPrestamo() {
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     /**
@@ -43,25 +46,23 @@ public class FPrestamo extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnBuscarCliente = new javax.swing.JButton();
         btnCalcularPrestamo = new javax.swing.JButton();
-        btnCalcularCuotas = new javax.swing.JButton();
         btnTablaAmortizacion = new javax.swing.JButton();
         jpaneldatos1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtnombre2 = new javax.swing.JTextField();
+        txtTInt = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtMonto1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        txtSaldo = new javax.swing.JTextField();
+        jcbPlazo = new javax.swing.JComboBox<>();
+        btnRegresar1 = new javax.swing.JButton();
         jpaneldatos = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtcedula = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtnombre = new javax.swing.JTextField();
         txtcodcuenta = new javax.swing.JTextField();
+        txtnombre = new javax.swing.JTextField();
         btnActualizarTabla = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblcliente = new javax.swing.JTable();
@@ -85,18 +86,6 @@ public class FPrestamo extends javax.swing.JFrame {
             }
         });
 
-        btnCalcularCuotas.setText("Cálculo Cuotas");
-        btnCalcularCuotas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCalcularCuotasMouseClicked(evt);
-            }
-        });
-        btnCalcularCuotas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcularCuotasActionPerformed(evt);
-            }
-        });
-
         btnTablaAmortizacion.setText("Tabla de Amortización");
         btnTablaAmortizacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,7 +106,9 @@ public class FPrestamo extends javax.swing.JFrame {
 
         jLabel5.setText("Monto Máximo");
 
-        jLabel6.setText("Cuota");
+        jLabel6.setText("Tasa interes: ");
+
+        txtTInt.setEnabled(false);
 
         jLabel8.setText("Valor Prestamo");
 
@@ -127,14 +118,18 @@ public class FPrestamo extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3 meses", "6 meses", "12 meses", "24 meses", "36 meses" }));
-        jComboBox1.setToolTipText("");
+        jcbPlazo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "6", "12", "24", "36" }));
+        jcbPlazo.setToolTipText("");
 
-        jLabel7.setText("Saldo Cuenta");
-
-        txtSaldo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSaldoKeyTyped(evt);
+        btnRegresar1.setText("Verificiar");
+        btnRegresar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegresar1MouseClicked(evt);
+            }
+        });
+        btnRegresar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresar1ActionPerformed(evt);
             }
         });
 
@@ -148,24 +143,20 @@ public class FPrestamo extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel6))
                 .addGap(43, 43, 43)
-                .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMonto1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRegresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTInt)
+                    .addComponent(txtMonto1)
+                    .addComponent(txtMonto)
+                    .addComponent(jcbPlazo, 0, 151, Short.MAX_VALUE))
                 .addContainerGap(81, Short.MAX_VALUE))
         );
         jpaneldatos1Layout.setVerticalGroup(
             jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpaneldatos1Layout.createSequentialGroup()
-                .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -176,17 +167,20 @@ public class FPrestamo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)))
+                    .addComponent(txtTInt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegresar1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpaneldatos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jpaneldatos.setEnabled(false);
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Cuenta:");
 
         txtcedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,33 +208,34 @@ public class FPrestamo extends javax.swing.JFrame {
             .addGroup(jpaneldatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(20, 20, 20)
-                .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpaneldatosLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpaneldatosLayout.createSequentialGroup()
-                        .addGap(352, 352, 352)
-                        .addComponent(txtcodcuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(289, 289, 289)
+                .addComponent(txtcodcuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpaneldatosLayout.setVerticalGroup(
             jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpaneldatosLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtcodcuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11))
+            .addGroup(jpaneldatosLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcodcuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         btnActualizarTabla.setText("Actualizar Tabla");
@@ -282,50 +277,49 @@ public class FPrestamo extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnTablaAmortizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCalcularPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnTablaAmortizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCalcularCuotas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCalcularPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(32, 32, 32)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRegresar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(btnActualizarTabla))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jpaneldatos, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnActualizarTabla))
                             .addComponent(jpaneldatos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnRegresar))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(48, 48, 48)
                 .addComponent(btnCalcularPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCalcularCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                .addGap(48, 48, 48)
                 .addComponent(btnTablaAmortizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(143, 143, 143))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jpaneldatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnActualizarTabla)
-                        .addGap(53, 53, 53)))
-                .addGap(11, 11, 11)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(btnActualizarTabla)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jpaneldatos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(btnRegresar))
         );
 
@@ -336,7 +330,7 @@ public class FPrestamo extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,11 +344,10 @@ public class FPrestamo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-
         DefaultTableModel modelo = new DefaultTableModel();
         String vacio = "";
         try {
-            if (vacio.equals(txtnombre.getText())) {
+            /*if (vacio.equals(txtnombre.getText())) {
                 if (vacio.equals(txtcedula.getText())) {
                     JOptionPane.showMessageDialog(frame, "Ingrese cédula");
                 } else {
@@ -365,7 +358,7 @@ public class FPrestamo extends javax.swing.JFrame {
                     if (aux == 1) {
                         cedula1 = Integer.toString(cedula);
                         nombre = txtnombre.getText();
-                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                        //clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
                         modelo.addColumn("Cliente");
                         modelo.addColumn("Cédula");
                         modelo.addColumn("Nombre");
@@ -375,35 +368,36 @@ public class FPrestamo extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(frame, "La cédula no esta en la base de datos");
                     }
                 }
+            } else {*/
+            if (vacio.equals(txtcedula.getText())) {
+                String cedula1 = txtcedula.getText();
+                String nombre = txtnombre.getText();
+                clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
+                modelo.addColumn("Cliente");
+                modelo.addColumn("Cédula");
+                modelo.addColumn("Nombre");
+                tblcliente.setModel(modelo);
+                tblcliente.setModel(clienteDAO.busquedaNombre((modelo)));
             } else {
-                if (vacio.equals(txtcedula.getText())) {
-                    String cedula1 = txtcedula.getText();
-                    String nombre = txtnombre.getText();
+                int cedula = Integer.parseInt(txtcedula.getText());
+                validarCedula(cedula);
+                String cedula1;
+                String nombre;
+                if (aux == 1) {
+                    cedula1 = Integer.toString(cedula);
+                    nombre = txtnombre.getText();
                     clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
                     modelo.addColumn("Cliente");
                     modelo.addColumn("Cédula");
                     modelo.addColumn("Nombre");
                     tblcliente.setModel(modelo);
-                    tblcliente.setModel(clienteDAO.busquedaNombre((modelo)));
+                    tblcliente.setModel(clienteDAO.busquedaCedula((modelo)));
+                    obj2 = new CPrestamoDAO();
                 } else {
-                    int cedula = Integer.parseInt(txtcedula.getText());
-                    validarCedula(cedula);
-                    String cedula1;
-                    String nombre;
-                    if (aux == 1) {
-                        cedula1 = Integer.toString(cedula);
-                        nombre = txtnombre.getText();
-                        clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
-                        modelo.addColumn("Cliente");
-                        modelo.addColumn("Cédula");
-                        modelo.addColumn("Nombre");
-                        tblcliente.setModel(modelo);
-                        tblcliente.setModel(clienteDAO.busquedaCedula((modelo)));
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "La cédula no esta en la base de datos");
-                    }
+                    JOptionPane.showMessageDialog(frame, "La cédula no esta en la base de datos");
                 }
             }
+            //}
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error de conexion a la base");
             ex.printStackTrace();
@@ -411,17 +405,9 @@ public class FPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnCalcularPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularPrestamoActionPerformed
-
+        obj2 = new CPrestamoDAO();
+        txtMonto.setText(String.valueOf(obj2.obtener_promedio(txtcedula.getText())));
     }//GEN-LAST:event_btnCalcularPrestamoActionPerformed
-
-    private void btnCalcularCuotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalcularCuotasMouseClicked
-        FgestionCuentas obj = new FgestionCuentas();
-        obj.setVisible(true);
-    }//GEN-LAST:event_btnCalcularCuotasMouseClicked
-
-    private void btnCalcularCuotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularCuotasActionPerformed
-        jpaneldatos.enable(true);
-    }//GEN-LAST:event_btnCalcularCuotasActionPerformed
 
     private void btnTablaAmortizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablaAmortizacionActionPerformed
         FTablaAmortizacion obj = new FTablaAmortizacion();
@@ -437,10 +423,6 @@ public class FPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMonto1KeyTyped
 
-    private void txtSaldoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSaldoKeyTyped
-
     private void txtcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcedulaActionPerformed
@@ -450,10 +432,6 @@ public class FPrestamo extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtcedulaKeyTyped
-
-    private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtnombreActionPerformed
 
     private void btnActualizarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTablaActionPerformed
         // TODO add your handling code here:
@@ -469,6 +447,21 @@ public class FPrestamo extends javax.swing.JFrame {
         obj.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombreActionPerformed
+
+    private void btnRegresar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresar1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresar1MouseClicked
+
+    private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
+        // TODO add your handling code here:
+        double tasa = obj2.generarPrestamo(Double.parseDouble(txtMonto.getText()), Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
+        txtTInt.setText(String.valueOf(tasa));
+        CPrestamo prestamo = new CPrestamo(tasa,Double.parseDouble(txtMonto.getText()),Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
+    }//GEN-LAST:event_btnRegresar1ActionPerformed
 
     public final int validarCedula(final int cedula) {
         String cedula1 = Integer.toString(cedula);
@@ -502,7 +495,7 @@ public class FPrestamo extends javax.swing.JFrame {
         }
         return aux;
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -541,29 +534,27 @@ public class FPrestamo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarTabla;
     private javax.swing.JButton btnBuscarCliente;
-    private javax.swing.JButton btnCalcularCuotas;
     private javax.swing.JButton btnCalcularPrestamo;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnRegresar1;
     private javax.swing.JButton btnTablaAmortizacion;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> jcbPlazo;
     private javax.swing.JPanel jpaneldatos;
     private javax.swing.JPanel jpaneldatos1;
     private javax.swing.JTable tblcliente;
     private javax.swing.JTextField txtMonto;
     private javax.swing.JTextField txtMonto1;
-    private javax.swing.JTextField txtSaldo;
+    private javax.swing.JTextField txtTInt;
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtcodcuenta;
     private javax.swing.JTextField txtnombre;
-    private javax.swing.JTextField txtnombre2;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,42 +14,52 @@ import javax.swing.JFrame;
  * @author Sofia Gomez
  */
 public class CPrestamo {
-
-    //Atributos
-    private JFrame frame = new JFrame("Mensaje de Error");
-    private ResultSet resultado;
-    private String cod_cuenta;
-    private final Conexion conn;
-    
-   /**
-    * 
-    */
-    public CPrestamo() {
-        conn = new Conexion();
-    }
-    
-//   public String obtenerSaldo() {
-//        float aux = 0;
-//        String cod = "0";        
-//        try {
-//            resultado = conn.ejecutarSQLSelect("Select SALDO from CUENTA where CODIGO_CUENTA like '%" + cod_cuenta + "%'");
-//            while (resultado.next()) {
-//                cod = resultado.getString(1);
-//            }
-//            //aux = Float.parseFloat(cod);
-//        } catch (SQLException ex) {
-//
-//        }
-//        return cod;
-//    } 
+    /**
+     * Variable que acoge el valor de tasa de interés
+     */
+    private double tasaInteres;
+    /**
+     * Variable que acoge el valor del monto del prestamo
+     */
+    private double monto;
+    /**
+     * Variable que acoge el plazo del prestamo
+     */
+    private int plazo;
     
     /**
-     * 
-     * @return 
+     * Constructor de la clase CPrestamo
+     * @param tasaInteres
+     * @param monto
+     * @param plazo 
      */
-    public int CalculoMontoMaximo() {
-        int n = 0;
-        n = n * 3;
-        return n;
+    public CPrestamo(double tasaInteres, double monto, int plazo) {
+        this.tasaInteres = tasaInteres;
+        this.monto = monto;
+        this.plazo = plazo;
     }
+
+    public double getTasaInteres() {
+        return tasaInteres;
+    }
+
+    public void setTasaInteres(float tasaInteres) {
+        this.tasaInteres = tasaInteres;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(float monto) {
+        this.monto = monto;
+    }
+
+    public int getPlazo() {
+        return plazo;
+    }
+
+    public void setPlazo(int plazo) {
+        this.plazo = plazo;
+    }    
 }
