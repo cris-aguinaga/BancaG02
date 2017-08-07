@@ -65,25 +65,4 @@ public class CPrestamo {
     public void setPlazo(int plazo) {
         this.plazo = plazo;
     }   
-    
-     public String TAmortizacion(double cantidadPrestamo, int meses, float interes) {
-        
-        double capitalAdeuda[] = new double[36];
-        double cuota;
-        interes = (interes / 100) / 12;
-        String cuot = "";
-        String tab = "";
-        cuota = cantidadPrestamo * ((interes * (Math.pow((1 + interes), meses))) / ((Math.pow((1 + interes), meses)) - 1));
-        double interesmonto;
-        double reduccionCapital;
-        for (int i = 0; i < meses; i++) {
-            interesmonto = cantidadPrestamo * interes;
-            reduccionCapital = cuota - interesmonto;
-            capitalAdeuda[i] =  Math.round(cantidadPrestamo - reduccionCapital)*100/100;            
-            cuot =cuot+cuota+"\t"+interesmonto+"\t"+reduccionCapital+"\t"+capitalAdeuda[i] + "\n";
-            cantidadPrestamo=capitalAdeuda[i];
-        }
-        return cuot;
-
-    }
 }

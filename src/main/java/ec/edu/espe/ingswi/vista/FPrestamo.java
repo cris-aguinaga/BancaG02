@@ -21,6 +21,7 @@ public class FPrestamo extends javax.swing.JFrame {
 
     FCliente obj = new FCliente();
     CPrestamoDAO obj2;
+    CPrestamo prestamo;
     private JFrame frame = new JFrame("Mensaje de Error");
     private int aux;
     float Saldo;
@@ -32,6 +33,7 @@ public class FPrestamo extends javax.swing.JFrame {
     public FPrestamo() {
         initComponents();
         this.setLocationRelativeTo(this);
+        btnTablaAmortizacion.setEnabled(false);
     }
 
     /**
@@ -54,9 +56,10 @@ public class FPrestamo extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtTInt = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtMonto1 = new javax.swing.JTextField();
+        txtMontoP = new javax.swing.JTextField();
         jcbPlazo = new javax.swing.JComboBox<>();
         btnRegresar1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jpaneldatos = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtcedula = new javax.swing.JTextField();
@@ -112,16 +115,16 @@ public class FPrestamo extends javax.swing.JFrame {
 
         jLabel8.setText("Valor Prestamo");
 
-        txtMonto1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtMontoP.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtMonto1KeyTyped(evt);
+                txtMontoPKeyTyped(evt);
             }
         });
 
         jcbPlazo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "6", "12", "24", "36" }));
         jcbPlazo.setToolTipText("");
 
-        btnRegresar1.setText("Verificiar");
+        btnRegresar1.setText("Verificar");
         btnRegresar1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegresar1MouseClicked(evt);
@@ -132,6 +135,8 @@ public class FPrestamo extends javax.swing.JFrame {
                 btnRegresar1ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("%");
 
         javax.swing.GroupLayout jpaneldatos1Layout = new javax.swing.GroupLayout(jpaneldatos1);
         jpaneldatos1.setLayout(jpaneldatos1Layout);
@@ -146,12 +151,18 @@ public class FPrestamo extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addGap(43, 43, 43)
                 .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRegresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTInt)
-                    .addComponent(txtMonto1)
+                    .addComponent(txtMontoP)
                     .addComponent(txtMonto)
-                    .addComponent(jcbPlazo, 0, 151, Short.MAX_VALUE))
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addComponent(jcbPlazo, 0, 151, Short.MAX_VALUE)
+                    .addGroup(jpaneldatos1Layout.createSequentialGroup()
+                        .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpaneldatos1Layout.createSequentialGroup()
+                                .addComponent(btnRegresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtTInt))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jpaneldatos1Layout.setVerticalGroup(
             jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +174,7 @@ public class FPrestamo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtMonto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMontoP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -171,7 +182,8 @@ public class FPrestamo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpaneldatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTInt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegresar1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -347,28 +359,6 @@ public class FPrestamo extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel();
         String vacio = "";
         try {
-            /*if (vacio.equals(txtnombre.getText())) {
-                if (vacio.equals(txtcedula.getText())) {
-                    JOptionPane.showMessageDialog(frame, "Ingrese cédula");
-                } else {
-                    int cedula = Integer.parseInt(txtcedula.getText());
-                    validarCedula(cedula);
-                    String cedula1;
-                    String nombre;
-                    if (aux == 1) {
-                        cedula1 = Integer.toString(cedula);
-                        nombre = txtnombre.getText();
-                        //clienteDAO = new CClienteDAO(new CCliente(cedula1, nombre));
-                        modelo.addColumn("Cliente");
-                        modelo.addColumn("Cédula");
-                        modelo.addColumn("Nombre");
-                        tblcliente.setModel(modelo);
-                        tblcliente.setModel(clienteDAO.busquedaCedula((modelo)));
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "La cédula no esta en la base de datos");
-                    }
-                }
-            } else {*/
             if (vacio.equals(txtcedula.getText())) {
                 String cedula1 = txtcedula.getText();
                 String nombre = txtnombre.getText();
@@ -410,7 +400,7 @@ public class FPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalcularPrestamoActionPerformed
 
     private void btnTablaAmortizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablaAmortizacionActionPerformed
-        FTablaAmortizacion obj = new FTablaAmortizacion();
+        FTablaAmortizacion obj = new FTablaAmortizacion(prestamo);
         obj.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnTablaAmortizacionActionPerformed
@@ -419,9 +409,9 @@ public class FPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMontoKeyTyped
 
-    private void txtMonto1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMonto1KeyTyped
+    private void txtMontoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoPKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtMonto1KeyTyped
+    }//GEN-LAST:event_txtMontoPKeyTyped
 
     private void txtcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaActionPerformed
         // TODO add your handling code here:
@@ -459,8 +449,11 @@ public class FPrestamo extends javax.swing.JFrame {
     private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
         // TODO add your handling code here:
         double tasa = obj2.generarPrestamo(Double.parseDouble(txtMonto.getText()), Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
-        txtTInt.setText(String.valueOf(tasa));
-        CPrestamo prestamo = new CPrestamo(tasa,Double.parseDouble(txtMonto.getText()),Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
+        if (obj2.getControl() == 1) {
+            txtTInt.setText(String.valueOf(tasa));
+            prestamo = new CPrestamo(tasa, Double.parseDouble(txtMontoP.getText()), Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
+            btnTablaAmortizacion.setEnabled(true);
+        }
     }//GEN-LAST:event_btnRegresar1ActionPerformed
 
     public final int validarCedula(final int cedula) {
@@ -538,6 +531,7 @@ public class FPrestamo extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnRegresar1;
     private javax.swing.JButton btnTablaAmortizacion;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -551,7 +545,7 @@ public class FPrestamo extends javax.swing.JFrame {
     private javax.swing.JPanel jpaneldatos1;
     private javax.swing.JTable tblcliente;
     private javax.swing.JTextField txtMonto;
-    private javax.swing.JTextField txtMonto1;
+    private javax.swing.JTextField txtMontoP;
     private javax.swing.JTextField txtTInt;
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtcodcuenta;

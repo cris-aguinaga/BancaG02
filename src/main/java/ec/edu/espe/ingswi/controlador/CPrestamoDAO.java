@@ -13,10 +13,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,6 +30,7 @@ public class CPrestamoDAO {
     private CPrestamo prestamo;
     private JFrame frame = new JFrame("Mensaje de Error");
     private double promTotal;
+    private int control;
     /**
      * conexion establece la conexion con la base de datos.
      */
@@ -42,8 +45,13 @@ public class CPrestamoDAO {
      */
     public CPrestamoDAO() {
         this.conexion = new Conexion();
+        control = 0;
     }
 
+    public int getControl() {
+        return control;
+    }
+    
     public final double obtener_promedio(String cedula) {
         PreparedStatement sentencia = null;
         double promedio = 0;
@@ -64,21 +72,45 @@ public class CPrestamoDAO {
         promTotal = promedio;
         return promedio;
     }
-    
+
     public double generarPrestamo(double monto, int plazo) {
         double tasaInteres = 0;
-        if(monto > 0 || monto < promTotal){
-            if(plazo >=3 || plazo <= 36){
-                if(plazo <= 12){
-                    tasaInteres = 0.1;
-                }else{
-                    tasaInteres = 0.16;
+        if (monto > 0 || monto < promTotal) {
+            if (plazo >= 3 || plazo <= 36) {
+                if (plazo <= 12) {
+                    tasaInteres = 10;
+                } else {
+                    tasaInteres = 16;
                 }
                 JOptionPane.showMessageDialog(null, "Usted puede obtener el prestamo.");
+                control = 1;
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "El mónto del prestamo es superior al límite de su cuenta.");            
+        } else {
+            JOptionPane.showMessageDialog(null, "El mónto del prestamo es superior al límite de su cuenta.");
         }
         return tasaInteres;
+    }
+
+    public final DefaultTableModel TAmortizacion(double cantidadPrestamo, int meses, double interes, final DefaultTableModel tablaA) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        double capitalAdeuda[] = new double[36];
+        double cuota;
+        interes = (interes / 100) / 12;
+        String cuot = "";
+        String tab = "";
+        cuota = cantidadPrestamo * ((interes * (Math.pow((1 + interes), meses))) / ((Math.pow((1 + interes), meses)) - 1));
+        double interesmonto;
+        double reduccionCapital;
+        for (int i = 0; i < meses; i++) {
+            interesmonto = cantidadPrestamo * interes;
+            reduccionCapital = cuota - interesmonto;
+            capitalAdeuda[i] = cantidadPrestamo - reduccionCapital;
+            tablaA.addRow(new String[]{"" + (i + 1), String.valueOf(df.format(cuota)), 
+                String.valueOf(df.format(interesmonto)), 
+                String.valueOf(df.format(reduccionCapital)), 
+                String.valueOf(df.format(capitalAdeuda[i]))});
+            cantidadPrestamo = capitalAdeuda[i];
+        }
+        return tablaA;
     }
 }
