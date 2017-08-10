@@ -136,6 +136,12 @@ public class FCliente extends javax.swing.JFrame {
 
         jLabel4.setText("Ingresos Mensuales");
 
+        txtIngreso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIngresoKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpaneldatosLayout = new javax.swing.GroupLayout(jpaneldatos);
         jpaneldatos.setLayout(jpaneldatosLayout);
         jpaneldatosLayout.setHorizontalGroup(
@@ -333,6 +339,7 @@ public class FCliente extends javax.swing.JFrame {
     public final void limpiarDatos() {
         txtnombre.setText("");
         txtcedula.setText("");
+        txtIngreso.setText("");
     }
 
     /**
@@ -587,6 +594,13 @@ public class FCliente extends javax.swing.JFrame {
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         listado();
     }//GEN-LAST:event_btnactualizarActionPerformed
+
+    private void txtIngresoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIngresoKeyTyped
+        // TODO add your handling code here:
+         if (evt.getKeyChar() < (char) 48 || evt.getKeyChar() > (char) 57) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIngresoKeyTyped
     /**
      * @param args the command line arguments
      */
