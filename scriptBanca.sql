@@ -19,6 +19,8 @@ create table CLIENTE
 (
    CEDULA               char(13) not null,
    NOMBRE               varchar(50) not null,
+   GENERO               varchar(50) not null,
+   INGRESO              numeric(15,2) not null,
    primary key (CEDULA)
 );
 
