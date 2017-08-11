@@ -5,17 +5,12 @@
  */
 package ec.edu.espe.ingswi.controlador;
 
-import ec.edu.espe.ingswi.modelo.CCliente;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -75,8 +70,8 @@ public class CPrestamoDAO {
 
     public double generarPrestamo(double monto, int plazo) {
         double tasaInteres = 0;
-        if (monto > 0 || monto < promTotal) {
-            if (plazo >= 3 || plazo <= 36) {
+        if (monto > 0 && monto <= promTotal) {
+            if (plazo >= 3 && plazo <= 36) {
                 if (plazo <= 12) {
                     tasaInteres = 10;
                 } else {
@@ -86,7 +81,7 @@ public class CPrestamoDAO {
                 control = 1;
             }
         } else {
-            JOptionPane.showMessageDialog(null, "El mónto del prestamo es superior al límite de su cuenta.");
+            JOptionPane.showMessageDialog(null, "El monto del prestamo es superior al límite de su cuenta.");
         }
         return tasaInteres;
     }
@@ -96,8 +91,6 @@ public class CPrestamoDAO {
         double capitalAdeuda[] = new double[36];
         double cuota;
         interes = (interes / 100) / 12;
-        String cuot = "";
-        String tab = "";
         cuota = cantidadPrestamo * ((interes * (Math.pow((1 + interes), meses))) / ((Math.pow((1 + interes), meses)) - 1));
         double interesmonto;
         double reduccionCapital;

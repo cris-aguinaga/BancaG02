@@ -5,10 +5,6 @@
  */
 package ec.edu.espe.ingswi.modelo;
 
-import ec.edu.espe.ingswi.controlador.Conexion;
-import java.sql.ResultSet;
-import javax.swing.JFrame;
-
 /**
  *
  * @author Sofia Gomez
@@ -37,9 +33,6 @@ public class CPrestamo {
         this.tasaInteres = tasaInteres;
         this.monto = monto;
         this.plazo = plazo;
-    }
-
-    public CPrestamo() {        
     }
 
     public double getTasaInteres() {

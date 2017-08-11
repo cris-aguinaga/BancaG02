@@ -60,16 +60,15 @@ public class FPrestamo extends javax.swing.JFrame {
         jcbPlazo = new javax.swing.JComboBox<>();
         btnRegresar1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnActualizarTabla = new javax.swing.JButton();
         jpaneldatos = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         txtcedula = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtcodcuenta = new javax.swing.JTextField();
-        txtnombre = new javax.swing.JTextField();
-        btnActualizarTabla = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblcliente = new javax.swing.JTable();
         btnRegresar = new javax.swing.JButton();
+        txtnombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +100,7 @@ public class FPrestamo extends javax.swing.JFrame {
 
         jLabel4.setText("Meses Plazo");
 
+        txtMonto.setEditable(false);
         txtMonto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMontoKeyTyped(evt);
@@ -121,7 +121,7 @@ public class FPrestamo extends javax.swing.JFrame {
             }
         });
 
-        jcbPlazo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "6", "12", "24", "36" }));
+        jcbPlazo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "6", "12", "15", "18", "24", "36" }));
         jcbPlazo.setToolTipText("");
 
         btnRegresar1.setText("Verificar");
@@ -189,10 +189,15 @@ public class FPrestamo extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnActualizarTabla.setText("Actualizar Tabla");
+        btnActualizarTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarTablaActionPerformed(evt);
+            }
+        });
+
         jpaneldatos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jpaneldatos.setEnabled(false);
-
-        jLabel2.setText("Cuenta:");
 
         txtcedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,27 +212,15 @@ public class FPrestamo extends javax.swing.JFrame {
 
         jLabel3.setText("Cédula");
 
-        txtnombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnombreActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jpaneldatosLayout = new javax.swing.GroupLayout(jpaneldatos);
         jpaneldatos.setLayout(jpaneldatosLayout);
         jpaneldatosLayout.setHorizontalGroup(
             jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpaneldatosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpaneldatosLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpaneldatosLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(289, 289, 289)
                 .addComponent(txtcodcuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -243,19 +236,8 @@ public class FPrestamo extends javax.swing.JFrame {
                 .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpaneldatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
-
-        btnActualizarTabla.setText("Actualizar Tabla");
-        btnActualizarTabla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarTablaActionPerformed(evt);
-            }
-        });
 
         tblcliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -283,16 +265,27 @@ public class FPrestamo extends javax.swing.JFrame {
             }
         });
 
+        txtnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombreActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnTablaAmortizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCalcularPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnTablaAmortizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCalcularPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -312,7 +305,9 @@ public class FPrestamo extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addComponent(btnCalcularPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -413,16 +408,6 @@ public class FPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMontoPKeyTyped
 
-    private void txtcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcedulaActionPerformed
-
-    private void txtcedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcedulaKeyTyped
-        if (evt.getKeyChar() < (char) 48 || evt.getKeyChar() > (char) 57) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtcedulaKeyTyped
-
     private void btnActualizarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTablaActionPerformed
         // TODO add your handling code here:
         obj.listado();
@@ -438,23 +423,37 @@ public class FPrestamo extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtnombreActionPerformed
-
     private void btnRegresar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresar1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresar1MouseClicked
 
     private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
         // TODO add your handling code here:
-        double tasa = obj2.generarPrestamo(Double.parseDouble(txtMonto.getText()), Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
-        if (obj2.getControl() == 1) {
-            txtTInt.setText(String.valueOf(tasa));
-            prestamo = new CPrestamo(tasa, Double.parseDouble(txtMontoP.getText()), Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
-            btnTablaAmortizacion.setEnabled(true);
+        if (txtMontoP.getText() != " ") {
+            double tasa = obj2.generarPrestamo(Double.parseDouble(txtMontoP.getText()), Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
+            if (obj2.getControl() == 1) {
+                txtTInt.setText(String.valueOf(tasa));
+                prestamo = new CPrestamo(tasa, Double.parseDouble(txtMontoP.getText()), Integer.parseInt(jcbPlazo.getSelectedItem().toString()));
+                btnTablaAmortizacion.setEnabled(true);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Ingrese el monto del prestamo.");
         }
     }//GEN-LAST:event_btnRegresar1ActionPerformed
+
+    private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombreActionPerformed
+
+    private void txtcedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcedulaKeyTyped
+        if (evt.getKeyChar() < (char) 48 || evt.getKeyChar() > (char) 57) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtcedulaKeyTyped
+
+    private void txtcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcedulaActionPerformed
 
     public final int validarCedula(final int cedula) {
         String cedula1 = Integer.toString(cedula);
@@ -532,7 +531,6 @@ public class FPrestamo extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar1;
     private javax.swing.JButton btnTablaAmortizacion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
