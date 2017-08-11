@@ -21,6 +21,7 @@ public class FAutenticacion extends javax.swing.JFrame {
     public FAutenticacion() {
         initComponents();
         this.setTitle("Ingreso de Usuarios");
+        this.setLocationRelativeTo(this);
     }
 
     /**
