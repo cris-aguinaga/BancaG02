@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import ec.edu.espe.ingswi.modelo.CCliente;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -28,7 +29,10 @@ public class CClienteDAO {
     * resultado guarda las acciones DML en la BD.
     */
     private ResultSet resultado;
-    
+    /**
+     * atributo que permitira que el valor del ingreso se muestre con dos decimales
+     */
+    private DecimalFormat df = new DecimalFormat("#.00");
     /**
     * contructor de la clase.
     * @param cliente
@@ -73,7 +77,7 @@ public class CClienteDAO {
                 cont++;
                 cliente = new CCliente(res.getString(1), res.getString(2),res.getString(3),res.getFloat(4));
                 tablaClientes.addRow(new String[]{"" + cont, cliente.getCedula(), cliente.getNombre(),
-                    cliente.getGenero(),cliente.getIngreso()+""});
+                    cliente.getGenero(),df.format(cliente.getIngreso())+""});
             }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -192,6 +196,28 @@ public class CClienteDAO {
                 JOptionPane.showMessageDialog(null, "Datos correctamente ingresados");
             }
         } catch (Exception ex) {
+        }
+    }
+    
+    public final void buscarC() {
+        PreparedStatement sentencia = null;
+        final Connection con = conexion.getConnection();
+        // select de todos los clientes y llenado de jtable
+        try {
+            sentencia = con.prepareStatement("select * from cliente where cedula=?");
+            sentencia.setString(1, cliente.getCedula());
+            final ResultSet res = sentencia.executeQuery();
+            int cont = 0;
+            while (res.next()) {
+                cont++;              
+            }
+            if (cont == 0) {
+                JOptionPane.showMessageDialog(null, "No se encontraron clientes");
+            }else{
+                JOptionPane.showMessageDialog(null, "Cliente encontrado");
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
         }
     }
 }

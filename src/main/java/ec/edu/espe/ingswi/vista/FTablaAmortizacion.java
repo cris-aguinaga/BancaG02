@@ -7,10 +7,10 @@ package ec.edu.espe.ingswi.vista;
 
 import ec.edu.espe.ingswi.controlador.CPrestamoDAO;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,14 +36,12 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
         obj = new CPrestamoDAO();
         modelo = new DefaultTableModel();
         modelo.addColumn("Mes");
+        modelo.addColumn("Fecha");
         modelo.addColumn("Cuota");
         modelo.addColumn("Interes Monto");
         modelo.addColumn("Capital Amortizado");
         modelo.addColumn("Capital que se adeuda");
         tblAmortizacion.setModel(modelo);
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
-        String longfechaActual = formatoFecha.format(new Date());
-        //JOptionPane.showMessageDialog(null, longfechaActual);
         tblAmortizacion.setModel(obj.TAmortizacion(this.prestamo.getMonto(),
                 this.prestamo.getPlazo(), this.prestamo.getTasaInteres(), modelo));
     }
