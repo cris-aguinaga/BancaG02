@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
@@ -30,9 +31,12 @@ public class CPrestamoDAO {
     private CPrestamo prestamo;
     private double promTotal;
     private int control;
+    private int bandera;
+    private int mesesOptimo;
     private Calendar c1 = GregorianCalendar.getInstance();
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     private DecimalFormat df = new DecimalFormat("#.00");
+    private ArrayList<CPrestamo> cuotas = new ArrayList<>();
     /**
      * conexion establece la conexion con la base de datos.
      */
@@ -48,11 +52,20 @@ public class CPrestamoDAO {
     public CPrestamoDAO() {
         this.conexion = new Conexion();
         control = 0;
+        bandera = 0;
     }
 
     public int getControl() {
         return control;
     }
+
+    public int getBandera() {
+        return bandera;
+    }
+
+    public int getMesesOptimo() {
+        return mesesOptimo;
+    }   
 
     public final double obtener_promedio(String cedula) {
         PreparedStatement sentencia = null;
@@ -84,7 +97,6 @@ public class CPrestamoDAO {
                 } else {
                     tasaInteres = 16;
                 }
-                JOptionPane.showMessageDialog(null, "Usted puede obtener el prestamo.");
                 control = 1;
             }
         } else {
@@ -127,7 +139,7 @@ public class CPrestamoDAO {
         return tablaA;
     }
 
-    public String calcularCouta(double cantidadPrestamo, int meses, double interes, String cedula) {
+    public String calcularCouta(double cantidadPrestamo, int meses, double interes, String cedula, int control) {
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
         String resultado = "";
@@ -137,27 +149,59 @@ public class CPrestamoDAO {
             sentencia = con.prepareStatement("select ingreso from cliente where cedula=?");
             sentencia.setString(1, cedula);
             final ResultSet res = sentencia.executeQuery();
-            int cont = 0;
             while (res.next()) {
-                cont++;
                 ingreso = res.getDouble(1);
             }
             interes = (interes / 100) / 12;
             cuota = cantidadPrestamo * ((interes * (Math.pow((1 + interes), meses))) / ((Math.pow((1 + interes), meses)) - 1));
-            if(cuota > (ingreso * 0.3)){
-                resultado = "Prestamo solicitado:\n" + "Monto: " + cantidadPrestamo + "\t\t Tasa de interes: "+ df.format(interes) 
-                        + "\t\t Plazo: " + meses + " meses" + "\n\n Cuota a pagar: " + df.format(cuota) + "\n Ingresos (30%) = " 
-                        + df.format(ingreso * 0.3) 
-                        + "\n\n El prestamo solicitado no se puede realizar, la cuota supera el 30% de sus ingresos.";
-            }else{
-                resultado = "Prestamo solicitado:\n" + "Monto: " + cantidadPrestamo + "\t Tasa de interes: "+ df.format(interes) 
-                        + "\t Plazo: " + meses + "meses" + "\n\n Cuota a pagar = " + df.format(cuota) + "\n Ingresos (30%) = " 
-                        + df.format(ingreso * 0.3) 
-                        + "\n\n Prestamo solicitado autorizado.";
+            if (control == 1) {
+                mesesOp(cantidadPrestamo);
+                for (int i = 0; i < cuotas.size(); i++) {
+                    if (cuotas.get(i).getMonto() < (ingreso * 0.3)) {
+                        mesesOptimo = cuotas.get(i).getPlazo();
+                        break;
+                    }
+                }
+                if (cuota > (ingreso * 0.3)) {
+                    resultado = "Prestamo solicitado:\n" + "Monto: " + cantidadPrestamo + "\t\t Tasa de interes: " + df.format(interes)
+                            + "\t\t Plazo: " + meses + " meses" + "\n\n Cuota a pagar: " + df.format(cuota) + "\n Ingresos (30%) = "
+                            + df.format(ingreso * 0.3)
+                            + "\n\n El prestamo solicitado no se puede realizar, la cuota supera el 30% de sus ingresos."
+                            + "\n\n El plazo a partir del cual se encuentra en aptas condiciones es de " + mesesOptimo + " meses.";
+                    bandera = 0;
+                } else {
+                    resultado = "Prestamo solicitado:\n" + "Monto: " + cantidadPrestamo + "\t Tasa de interes: " + df.format(interes)
+                            + "\t Plazo: " + meses + "meses" + "\n\n Cuota a pagar = " + df.format(cuota) + "\n Ingresos (30%) = "
+                            + df.format(ingreso * 0.3)
+                            + "\n\n Prestamo solicitado autorizado.";
+                    bandera = 1;
+                }                
+            } else {
+                resultado = "0";
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            resultado = "error";
         }
         return resultado;
+    }
+
+    public void mesesOp(double cantidadPrestamo) {
+        CPrestamo obj;
+        int meses = 0;
+        double cuota = 0;
+        double interes = 0;
+        for (int i = 1; i <= 36; i++) {
+            if (i <= 12) {
+                interes = 10;
+            } else {
+                interes = 16;
+            }
+            meses = i;
+            interes = (interes / 100) / 12;
+            cuota = cantidadPrestamo * ((interes * (Math.pow((1 + interes), meses))) / ((Math.pow((1 + interes), meses)) - 1));
+            obj = new CPrestamo(interes, cuota, meses);
+            cuotas.add(obj);
+            interes = 0;
+        }
     }
 }

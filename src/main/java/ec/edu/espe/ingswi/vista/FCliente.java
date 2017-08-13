@@ -612,10 +612,7 @@ public class FCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnactualizarActionPerformed
 
     private void txtIngresoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIngresoKeyTyped
-        // TODO add your handling code here:
-        /*if (evt.getKeyChar() < (char) 48 || evt.getKeyChar() > (char) 57) {
-            evt.consume();
-        }*/
+        // TODO add your handling code here:        
         char c = evt.getKeyChar();
         if (((c < '0') || (c > '9')) && (c != evt.VK_BACK_SPACE)
                 && (c != '.')) {

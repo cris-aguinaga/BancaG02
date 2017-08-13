@@ -20,7 +20,7 @@ public class Conexion {
     /**
      * Variable que tiene la clave de la BD del Sistema Bancario.
      */
-    private final String clave = "1234";
+    private final String clave = "12345";
     /**
      * Variable que tiene el url de la BD del Sistema Bancario.
      */
