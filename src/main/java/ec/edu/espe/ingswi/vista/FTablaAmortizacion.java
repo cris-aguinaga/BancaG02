@@ -35,8 +35,8 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
         this.prestamo = prestamo;
         obj = new CPrestamoDAO();
         modelo = new DefaultTableModel();
-        modelo.addColumn("Mes");
-        modelo.addColumn("Fecha");
+        modelo.addColumn("N.- Cuota");
+        modelo.addColumn("Fecha de pago");
         modelo.addColumn("Cuota");
         modelo.addColumn("Interes Monto");
         modelo.addColumn("Capital Amortizado");
