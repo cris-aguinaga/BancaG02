@@ -45,9 +45,10 @@ public class FgestionCuentas extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocation(new java.awt.Point(500, 200));
+        setLocation(new java.awt.Point(280, 20));
         setResizable(false);
 
+        btnVolver.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnVolver.setText("Volver");
         btnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -73,7 +74,10 @@ public class FgestionCuentas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        btnCrear.setText("Crear Cuenta");
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btnCrear.setText("Crear cuenta |");
+        btnCrear.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCrear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCrearMouseClicked(evt);
@@ -81,7 +85,9 @@ public class FgestionCuentas extends javax.swing.JFrame {
         });
         jMenuBar1.add(btnCrear);
 
-        btnDesactivar.setText("Desactivar Cuenta");
+        btnDesactivar.setText("Desactivar cuenta |");
+        btnDesactivar.setActionCommand("Desactivar Cuenta");
+        btnDesactivar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDesactivar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDesactivarMouseClicked(evt);
@@ -90,6 +96,7 @@ public class FgestionCuentas extends javax.swing.JFrame {
         jMenuBar1.add(btnDesactivar);
 
         btnBuscar.setText("Buscar");
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarMouseClicked(evt);
@@ -103,18 +110,19 @@ public class FgestionCuentas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVolver)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVolver))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(btnVolver))
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnVolver)
+                .addContainerGap())
         );
 
         pack();
