@@ -55,7 +55,7 @@ public class FMenu extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Menu Principal");
+        jLabel1.setText("Menú Principal");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
