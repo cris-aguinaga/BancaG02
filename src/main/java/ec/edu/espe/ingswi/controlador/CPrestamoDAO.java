@@ -166,8 +166,10 @@ public class CPrestamoDAO {
                     resultado = "Prestamo solicitado:\n" + "Monto: " + cantidadPrestamo + "\t\t Tasa de interes: " + df.format(interes)
                             + "\t\t Plazo: " + meses + " meses" + "\n\n Cuota a pagar: " + df.format(cuota) + "\n Ingresos (30%) = "
                             + df.format(ingreso * 0.3)
-                            + "\n\n El prestamo solicitado no se puede realizar, la cuota supera el 30% de sus ingresos."
-                            + "\n\n El plazo a partir del cual se encuentra en aptas condiciones es de " + mesesOptimo + " meses.";
+                            + "\n\n El prestamo solicitado no se puede realizar, la cuota supera el 30% de sus ingresos.";
+                    if(mesesOptimo > 0){
+                        resultado += "\n\n El plazo a partir del cual se encuentra en aptas condiciones es de " + mesesOptimo + " meses.";
+                    }                          
                     bandera = 0;
                 } else {
                     resultado = "Prestamo solicitado:\n" + "Monto: " + cantidadPrestamo + "\t Tasa de interes: " + df.format(interes)
