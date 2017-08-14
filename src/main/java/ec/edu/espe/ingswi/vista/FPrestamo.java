@@ -402,10 +402,9 @@ public class FPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalcularPrestamoActionPerformed
 
     private void btnTablaAmortizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablaAmortizacionActionPerformed
-        FTablaAmortizacion obj = new FTablaAmortizacion(prestamo);
+        FTablaAmortizacion obj = new FTablaAmortizacion(prestamo, txtcedula.getText());
         obj.setVisible(true);
         dispose();
-        insertarPrestamo();
     }//GEN-LAST:event_btnTablaAmortizacionActionPerformed
 
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
@@ -485,23 +484,7 @@ public class FPrestamo extends javax.swing.JFrame {
         txtMonto.setText("");
         txtMontoP.setText("");
         txtTInt.setText("");
-    }
-
-    public void insertarPrestamo() {
-        try {
-            String cedula1 = txtcedula.getText();
-            Double prestamo = Double.parseDouble((txtMontoP.getText()));
-            String plazo = jcbPlazo.getSelectedItem().toString();
-            Double interes = Double.parseDouble(((txtTInt.getText())));
-            //obj2 = new CPrestamoDAO(cedula1, new CPrestamo(interes, prestamo, Integer.parseInt(plazo)));
-            //obj2.insertPrestamo();
-            obj2.insertPrestamo1(cedula1,interes, prestamo, Integer.parseInt(plazo));
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-    }
-    
+    }  
 
     public final int validarCedula(final int cedula) {
         String cedula1 = Integer.toString(cedula);

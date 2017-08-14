@@ -5,6 +5,7 @@
  */
 package ec.edu.espe.ingswi.controlador;
 
+import ec.edu.espe.ingswi.modelo.CAmortizacion;
 import ec.edu.espe.ingswi.modelo.CCliente;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
 import java.sql.Connection;
@@ -31,16 +32,19 @@ public class CPrestamoDAO {
     //Atributos
     private CPrestamo prestamo;
     private CCliente cliente;
+    private CAmortizacion amortizacion;
     private double promTotal;
     //private double cuotamensual;
     private int control;
     private int bandera;
     private int mesesOptimo;
+    private int numeroTab = 1;
     private String cedula;
     private Calendar c1 = GregorianCalendar.getInstance();
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     private DecimalFormat df = new DecimalFormat("#.00");
     private ArrayList<CPrestamo> cuotas = new ArrayList<>();
+    private ArrayList<CAmortizacion> datos = new ArrayList<>();
     /**
      * conexion establece la conexion con la base de datos.
      */
@@ -67,8 +71,6 @@ public class CPrestamoDAO {
         control = 0;
         bandera = 0;
     }
-
-    
 
     public int getControl() {
         return control;
@@ -149,6 +151,8 @@ public class CPrestamoDAO {
                     String.valueOf(df.format(interesmonto)),
                     String.valueOf(df.format(reduccionCapital)),
                     String.valueOf(df.format(capitalAdeuda[i]))});
+                amortizacion = new CAmortizacion(i, sdf.format(c1.getTime()), cuota, interesmonto, reduccionCapital, capitalAdeuda[i]);
+                datos.add(amortizacion);
                 cantidadPrestamo = capitalAdeuda[i];
             }
             fechaP = sdf.format(c1.getTime());
@@ -223,43 +227,62 @@ public class CPrestamoDAO {
             interes = 0;
         }
     }
-    public final void insertPrestamo() {
+
+    public void insertPrestamo(String cedula, double cantidadPrestamo, int meses, double interes) {
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
-                double cuota = prestamo.getMonto() * ((prestamo.getTasaInteres() * (Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo()))) / ((Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo())) - 1));
+        double cuota;
+        interes = (interes / 100) / 12;
+        cuota = cantidadPrestamo * ((interes * (Math.pow((1 + interes), meses))) / ((Math.pow((1 + interes), meses)) - 1));
 
         // insertar los datos del prestamo dentro de la BD
         try {
-            sentencia = con.prepareStatement("insert into prestamo (Cedula,Interes,Prestamo,Plazo,Cuota) values (?,?,?,?,?)");
-            sentencia.setString(1, cliente.getCedula() );
-            sentencia.setDouble(2, prestamo.getTasaInteres());
-            sentencia.setDouble(3, prestamo.getMonto());
-            sentencia.setInt(4, prestamo.getPlazo());
-            sentencia.setDouble(5,cuota);
-                        
+            sentencia = con.prepareStatement("insert into prestamo (cedula,monto,plazo,interes,cuota,numtab) values (?,?,?,?,?,?)");
+            sentencia.setString(1, cedula);
+            sentencia.setDouble(2, cantidadPrestamo);
+            sentencia.setDouble(3, meses);
+            sentencia.setDouble(4, interes);
+            sentencia.setDouble(5, cuota);
+            sentencia.setInt(6, numeroTab);
             sentencia.execute();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
         }
     }
-    public void insertPrestamo1(String cedula,double interes,double monto,int plazo) {
+
+    public void insertarT(ArrayList<CAmortizacion> datos) {
+        System.out.println("Entra insertar");
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
-        // insertar los datos del prestamo dentro de la BD
-        interes = (interes / 100) / 12;
-        double cuota = monto * ((interes * (Math.pow((1 + interes), plazo))) / ((Math.pow((1 + interes), plazo)) - 1));
-
-
+        int cont = 0;
+        // insertar los datos del cliente dentro de la BD
         try {
-            sentencia = con.prepareStatement("insert into prestamo (Cedula,Interes,Prestamo,Plazo,Cuota) values (?,?,?,?,?)");
-            sentencia.setString(1, cedula );
-            sentencia.setDouble(2, interes);
-            sentencia.setDouble(3, monto);
-            sentencia.setInt(4, plazo);
-            sentencia.setDouble(5,cuota);
-            sentencia.execute();
+            sentencia = con.prepareStatement("select max(numtab) from amortizacion");
+            final ResultSet res = sentencia.executeQuery();
+            while (res.next()) {
+                cont++;
+                numeroTab = res.getInt(1);
+            }
+            if (cont > 0) {
+                numeroTab++;
+            }
+            for (int i = 0; i < datos.size(); i++) {
+                sentencia = con.prepareStatement("insert into amortizacion (numtab, numcuota, fecha, cuota, interes, capamo, capade) values (?,?,?,?,?,?,?)");
+                sentencia.setInt(1, numeroTab);
+                sentencia.setInt(2, datos.get(i).getNumCuota());
+                sentencia.setString(3, datos.get(i).getFecha());
+                sentencia.setDouble(4, datos.get(i).getCuota());
+                sentencia.setDouble(5, datos.get(i).getInteresM());
+                sentencia.setDouble(6, datos.get(i).getCapAmo());
+                sentencia.setDouble(7, datos.get(i).getCapAde());
+                sentencia.execute();
+            }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
         }
+    }
+
+    public ArrayList<CAmortizacion> getDatos() {
+        return datos;
     }
 }

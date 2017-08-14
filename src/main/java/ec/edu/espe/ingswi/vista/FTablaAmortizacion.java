@@ -6,9 +6,12 @@
 package ec.edu.espe.ingswi.vista;
 
 import ec.edu.espe.ingswi.controlador.CPrestamoDAO;
+import ec.edu.espe.ingswi.modelo.CAmortizacion;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,16 +23,19 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
     private DefaultTableModel modelo;
     private CPrestamoDAO obj;
     private CPrestamo prestamo;
+    private ArrayList<CAmortizacion> datos = new ArrayList<>();
+    private String cedulaCli;
 
     /**
      * Creates new form FTablaAmortizacion
      *
      * @param prestamo
      */
-    public FTablaAmortizacion(CPrestamo prestamo) {
+    public FTablaAmortizacion(CPrestamo prestamo, String cedula) {
         initComponents();
         this.setLocationRelativeTo(this);
         this.prestamo = prestamo;
+        this.cedulaCli = cedula;
         obj = new CPrestamoDAO();
         modelo = new DefaultTableModel();
         modelo.addColumn("N.- Cuota");
@@ -41,6 +47,7 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
         tblAmortizacion.setModel(modelo);
         tblAmortizacion.setModel(obj.TAmortizacion(this.prestamo.getMonto(),
                 this.prestamo.getPlazo(), this.prestamo.getTasaInteres(), modelo));
+        this.datos = obj.getDatos();
     }
 
     public Date sumarRestarDiasFecha(Date fecha, int dias) {
@@ -150,9 +157,9 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
 
     private void btnGuardarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPrestamoActionPerformed
         // TODO add your handling code here:
-        FPrestamo obj = new FPrestamo();
-        obj.insertar();
-        
+        obj.insertarT(datos);
+        obj.insertPrestamo(cedulaCli, prestamo.getMonto(), prestamo.getPlazo(), prestamo.getTasaInteres());
+        JOptionPane.showMessageDialog(null, "Prestamo almacenado correctamente.");
     }//GEN-LAST:event_btnGuardarPrestamoActionPerformed
 
     /**
@@ -186,7 +193,7 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FTablaAmortizacion(null).setVisible(true);
+                new FTablaAmortizacion(null,null).setVisible(true);
             }
         });
     }
