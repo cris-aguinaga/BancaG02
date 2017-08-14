@@ -7,6 +7,7 @@ package ec.edu.espe.ingswi.controlador;
 
 import ec.edu.espe.ingswi.modelo.CCliente;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
+import ec.edu.espe.ingswi.modelo.CTabla;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,6 +42,7 @@ public class CPrestamoDAO {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     private DecimalFormat df = new DecimalFormat("#.00");
     private ArrayList<CPrestamo> cuotas = new ArrayList<>();
+    private ArrayList<CTabla> tablaAmortizacion = new ArrayList<>();
     /**
      * conexion establece la conexion con la base de datos.
      */
@@ -67,8 +69,6 @@ public class CPrestamoDAO {
         control = 0;
         bandera = 0;
     }
-
-    
 
     public int getControl() {
         return control;
@@ -150,6 +150,8 @@ public class CPrestamoDAO {
                     String.valueOf(df.format(reduccionCapital)),
                     String.valueOf(df.format(capitalAdeuda[i]))});
                 cantidadPrestamo = capitalAdeuda[i];
+                CTabla objTabla = new CTabla(fechaP, cuota, interesmonto, reduccionCapital, capitalAdeuda[i]);
+                tablaAmortizacion.add(objTabla);
             }
             fechaP = sdf.format(c1.getTime());
         }
@@ -223,40 +225,55 @@ public class CPrestamoDAO {
             interes = 0;
         }
     }
+
     public final void insertPrestamo() {
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
-                double cuota = prestamo.getMonto() * ((prestamo.getTasaInteres() * (Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo()))) / ((Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo())) - 1));
+        double cuota = prestamo.getMonto() * ((prestamo.getTasaInteres() * (Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo()))) / ((Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo())) - 1));
 
         // insertar los datos del prestamo dentro de la BD
         try {
             sentencia = con.prepareStatement("insert into prestamo (Cedula,Interes,Prestamo,Plazo,Cuota) values (?,?,?,?,?)");
-            sentencia.setString(1, cliente.getCedula() );
+            sentencia.setString(1, cliente.getCedula());
             sentencia.setDouble(2, prestamo.getTasaInteres());
             sentencia.setDouble(3, prestamo.getMonto());
             sentencia.setInt(4, prestamo.getPlazo());
-            sentencia.setDouble(5,cuota);
-                        
+            sentencia.setDouble(5, cuota);
+
             sentencia.execute();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
         }
     }
-    public void insertPrestamo1(String cedula,double interes,double monto,int plazo) {
+
+    public void insertPrestamo1(String cedula, double interes, double monto, int plazo) {
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
         // insertar los datos del prestamo dentro de la BD
         interes = (interes / 100) / 12;
         double cuota = monto * ((interes * (Math.pow((1 + interes), plazo))) / ((Math.pow((1 + interes), plazo)) - 1));
 
-
         try {
             sentencia = con.prepareStatement("insert into prestamo (Cedula,Interes,Prestamo,Plazo,Cuota) values (?,?,?,?,?)");
-            sentencia.setString(1, cedula );
+            sentencia.setString(1, cedula);
             sentencia.setDouble(2, interes);
             sentencia.setDouble(3, monto);
             sentencia.setInt(4, plazo);
-            sentencia.setDouble(5,cuota);
+            sentencia.setDouble(5, cuota);
+            sentencia.execute();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+        }
+    }
+    
+    public final void insertTablaAmortizacion() {
+        PreparedStatement sentencia = null;
+        final Connection con = conexion.getConnection();
+        // insertar los datos del prestamo dentro de la BD
+        try {
+            sentencia = con.prepareStatement("insert into tabla (codigo_tabla,cedula,fecha,cuota,interes_monto,capital_amortizado,capital_adeudado) values (?,?,?,?,?,?,?)");
+            
+            
             sentencia.execute();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
