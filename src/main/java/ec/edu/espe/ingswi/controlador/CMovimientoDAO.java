@@ -15,31 +15,38 @@ import javax.swing.table.DefaultTableModel;
 import ec.edu.espe.ingswi.modelo.CCliente;
 import ec.edu.espe.ingswi.modelo.CCuenta;
 import ec.edu.espe.ingswi.modelo.CMovimiento;
+import ec.edu.espe.ingswi.modelo.CPrestamo;
 
 /**
  *
  * @author Adrián
  */
 public class CMovimientoDAO {
+
     /**
-    * Variable que establece la conexion con la BD.
-    */
+     * Variable que establece la conexion con la BD.
+     */
     private Conexion conexion;
     /**
-    * Objeto que maneja los datos del movimiento.
-    */
+     * Objeto que maneja los datos del movimiento.
+     */
     private CMovimiento movimiento;
+    private CPrestamo prestamo;
+    private CCliente cliente;
+
     /**
-    * Constructor de la clase.
-    * @param movimiento
-    */
+     * Constructor de la clase.
+     *
+     * @param movimiento
+     */
     public CMovimientoDAO(final CMovimiento movimiento) {
         this.movimiento = movimiento;
         this.conexion = new Conexion();
     }
+
     /**
-    * metodo para la insercion del movimiento.
-    */
+     * metodo para la insercion del movimiento.
+     */
     public final void insert() {
         PreparedStatement sentencia = null;
         final Connection con = conexion.getConnection();
@@ -57,11 +64,13 @@ public class CMovimientoDAO {
             e.printStackTrace();
         }
     }
+
     /**
-    * Metodo para visualizar los moviemtos hechos.
-    * @param tablaMovimientos
-    * @return tablaMovimientos
-    */
+     * Metodo para visualizar los moviemtos hechos.
+     *
+     * @param tablaMovimientos
+     * @return tablaMovimientos
+     */
     public final DefaultTableModel visualisarMovimientos(DefaultTableModel tablaMovimientos) {
         DefaultTableModel aux = new DefaultTableModel(
                 new Object[][]{},
@@ -79,13 +88,13 @@ public class CMovimientoDAO {
             int cont = 0;
             while (res.next()) {
                 cont++;
-                movimiento = new CMovimiento(new CCuenta(res.getString(2), 
+                movimiento = new CMovimiento(new CCuenta(res.getString(2),
                         new CCliente("", ""), "", 0, ""), res.getString(3),
                         res.getDate(4), res.getDouble(5), res.getDouble(6));
-                tablaMovimientos.addRow(new String[]{res.getString(1), 
-                        movimiento.getCuenta().getCodigoCuenta(), movimiento.getTipo(), 
-                        movimiento.getFecha().toString(), "$" + 
-                        movimiento.getMonto(), "$" + movimiento.getSaldo()});
+                tablaMovimientos.addRow(new String[]{res.getString(1),
+                    movimiento.getCuenta().getCodigoCuenta(), movimiento.getTipo(),
+                    movimiento.getFecha().toString(), "$"
+                    + movimiento.getMonto(), "$" + movimiento.getSaldo()});
             }
             if (cont == 0) {
                 JOptionPane.showMessageDialog(null, "No se encontraron Movimientos");
@@ -97,13 +106,15 @@ public class CMovimientoDAO {
         }
         return tablaMovimientos;
     }
+
     /**
-    * Metodo para realizar una busqueda de los movimientos hechos.
-    * @param tablaMovimientos
-    * @param numero
-    * @return tablaMovimientos
-    */
-    public final DefaultTableModel busquedaMovimiento( DefaultTableModel tablaMovimientos, final int numero) {
+     * Metodo para realizar una busqueda de los movimientos hechos.
+     *
+     * @param tablaMovimientos
+     * @param numero
+     * @return tablaMovimientos
+     */
+    public final DefaultTableModel busquedaMovimiento(DefaultTableModel tablaMovimientos, final int numero) {
         DefaultTableModel aux = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{
@@ -121,13 +132,13 @@ public class CMovimientoDAO {
             int cont = 0;
             while (res.next()) {
                 cont++;
-                movimiento = new CMovimiento(new CCuenta(res.getString(2), 
-                        new CCliente("", ""), "", 0, ""), res.getString(3), 
+                movimiento = new CMovimiento(new CCuenta(res.getString(2),
+                        new CCliente("", ""), "", 0, ""), res.getString(3),
                         res.getDate(4), res.getDouble(5), res.getDouble(6));
-                tablaMovimientos.addRow(new String[]{res.getString(1), 
-                        movimiento.getCuenta().getCodigoCuenta(), 
-                        movimiento.getTipo(), movimiento.getFecha().toString(), 
-                        "$" + movimiento.getMonto(), "$" + movimiento.getSaldo()});
+                tablaMovimientos.addRow(new String[]{res.getString(1),
+                    movimiento.getCuenta().getCodigoCuenta(),
+                    movimiento.getTipo(), movimiento.getFecha().toString(),
+                    "$" + movimiento.getMonto(), "$" + movimiento.getSaldo()});
                 if (cont == numero) {
                     return tablaMovimientos;
                 }
@@ -142,13 +153,15 @@ public class CMovimientoDAO {
         }
         return tablaMovimientos;
     }
+
     /**
-    * Metodo para visualizar los moviemtos hechos entre dos fechas.
-    * @param tablaMovimientos
-    * @param desde
-    * @param hasta
-    * @return tablaMovimientos
-    */
+     * Metodo para visualizar los moviemtos hechos entre dos fechas.
+     *
+     * @param tablaMovimientos
+     * @param desde
+     * @param hasta
+     * @return tablaMovimientos
+     */
     public final DefaultTableModel busquedaMovimientoFecha(DefaultTableModel tablaMovimientos, final Date desde, final Date hasta) {
         DefaultTableModel aux = new DefaultTableModel(
                 new Object[][]{},
@@ -168,13 +181,13 @@ public class CMovimientoDAO {
             int cont = 0;
             while (res.next()) {
                 cont++;
-                movimiento = new CMovimiento(new CCuenta(res.getString(2), 
-                        new CCliente("", ""), "", 0, ""), res.getString(3), 
+                movimiento = new CMovimiento(new CCuenta(res.getString(2),
+                        new CCliente("", ""), "", 0, ""), res.getString(3),
                         res.getDate(4), res.getDouble(5), res.getDouble(6));
-                tablaMovimientos.addRow(new String[]{res.getString(1), 
-                        movimiento.getCuenta().getCodigoCuenta(), movimiento.getTipo(),
-                        movimiento.getFecha().toString(), "$" + movimiento.getMonto(), 
-                        "$" + movimiento.getSaldo()});
+                tablaMovimientos.addRow(new String[]{res.getString(1),
+                    movimiento.getCuenta().getCodigoCuenta(), movimiento.getTipo(),
+                    movimiento.getFecha().toString(), "$" + movimiento.getMonto(),
+                    "$" + movimiento.getSaldo()});
             }
             if (cont == 0) {
                 JOptionPane.showMessageDialog(null, "No se encontraron movimientos");
@@ -185,4 +198,7 @@ public class CMovimientoDAO {
         }
         return tablaMovimientos;
     }
+
+    
+
 }

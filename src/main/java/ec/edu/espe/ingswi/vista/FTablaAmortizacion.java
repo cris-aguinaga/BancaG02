@@ -7,11 +7,8 @@ package ec.edu.espe.ingswi.vista;
 
 import ec.edu.espe.ingswi.controlador.CPrestamoDAO;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -68,6 +65,7 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblAmortizacion = new javax.swing.JTable();
         btnSalirA = new javax.swing.JButton();
+        btnGuardarPrestamo = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -96,6 +94,14 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
             }
         });
 
+        btnGuardarPrestamo.setText("Guardar");
+        btnGuardarPrestamo.setName(""); // NOI18N
+        btnGuardarPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarPrestamoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,6 +117,8 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
                         .addComponent(jScrollPane3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnGuardarPrestamo)
+                        .addGap(43, 43, 43)
                         .addComponent(btnSalirA)))
                 .addContainerGap())
         );
@@ -122,9 +130,13 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(btnSalirA)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalirA)
+                    .addComponent(btnGuardarPrestamo))
                 .addContainerGap())
         );
+
+        btnGuardarPrestamo.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -135,6 +147,13 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
         obj.show();
         this.hide();
     }//GEN-LAST:event_btnSalirAActionPerformed
+
+    private void btnGuardarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPrestamoActionPerformed
+        // TODO add your handling code here:
+        FPrestamo obj = new FPrestamo();
+        obj.insertar();
+        
+    }//GEN-LAST:event_btnGuardarPrestamoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,6 +192,7 @@ public class FTablaAmortizacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardarPrestamo;
     private javax.swing.JButton btnSalirA;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

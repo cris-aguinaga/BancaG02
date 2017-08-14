@@ -405,6 +405,7 @@ public class FPrestamo extends javax.swing.JFrame {
         FTablaAmortizacion obj = new FTablaAmortizacion(prestamo);
         obj.setVisible(true);
         dispose();
+        insertarPrestamo();
     }//GEN-LAST:event_btnTablaAmortizacionActionPerformed
 
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
@@ -486,6 +487,22 @@ public class FPrestamo extends javax.swing.JFrame {
         txtTInt.setText("");
     }
 
+    public void insertarPrestamo() {
+        try {
+            String cedula1 = txtcedula.getText();
+            Double prestamo = Double.parseDouble((txtMontoP.getText()));
+            String plazo = jcbPlazo.getSelectedItem().toString();
+            Double interes = Double.parseDouble(((txtTInt.getText())));
+            //obj2 = new CPrestamoDAO(cedula1, new CPrestamo(interes, prestamo, Integer.parseInt(plazo)));
+            //obj2.insertPrestamo();
+            obj2.insertPrestamo1(cedula1,interes, prestamo, Integer.parseInt(plazo));
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }
+    
+
     public final int validarCedula(final int cedula) {
         String cedula1 = Integer.toString(cedula);
         try {
@@ -517,6 +534,9 @@ public class FPrestamo extends javax.swing.JFrame {
             aux = 0;
         }
         return aux;
+    }
+    public void insertar(){
+        JOptionPane.showMessageDialog(null, "Ingreso Correcto de Prestamo");
     }
 
     /**

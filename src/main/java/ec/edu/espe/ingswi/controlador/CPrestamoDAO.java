@@ -5,6 +5,7 @@
  */
 package ec.edu.espe.ingswi.controlador;
 
+import ec.edu.espe.ingswi.modelo.CCliente;
 import ec.edu.espe.ingswi.modelo.CPrestamo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,10 +30,13 @@ public class CPrestamoDAO {
 
     //Atributos
     private CPrestamo prestamo;
+    private CCliente cliente;
     private double promTotal;
+    //private double cuotamensual;
     private int control;
     private int bandera;
     private int mesesOptimo;
+    private String cedula;
     private Calendar c1 = GregorianCalendar.getInstance();
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     private DecimalFormat df = new DecimalFormat("#.00");
@@ -55,6 +59,17 @@ public class CPrestamoDAO {
         bandera = 0;
     }
 
+    public CPrestamoDAO(String cedula, CPrestamo prestamo) {
+        cliente = new CCliente();
+        this.cedula = cliente.getCedula();
+        this.prestamo = prestamo;
+        this.conexion = new Conexion();
+        control = 0;
+        bandera = 0;
+    }
+
+    
+
     public int getControl() {
         return control;
     }
@@ -65,7 +80,7 @@ public class CPrestamoDAO {
 
     public int getMesesOptimo() {
         return mesesOptimo;
-    }   
+    }
 
     public final double obtener_promedio(String cedula) {
         PreparedStatement sentencia = null;
@@ -107,10 +122,12 @@ public class CPrestamoDAO {
 
     public final DefaultTableModel TAmortizacion(double cantidadPrestamo, int meses, double interes, final DefaultTableModel tablaA) {
         String fechaP = "";
+        //cuotamensual=0;
         double capitalAdeuda[] = new double[36];
         double cuota;
         interes = (interes / 100) / 12;
         cuota = cantidadPrestamo * ((interes * (Math.pow((1 + interes), meses))) / ((Math.pow((1 + interes), meses)) - 1));
+        //cuotamensual=cuota;
         double interesmonto;
         double reduccionCapital;
         for (int i = 0; i <= meses; i++) {
@@ -167,9 +184,9 @@ public class CPrestamoDAO {
                             + "\t\t Plazo: " + meses + " meses" + "\n\n Cuota a pagar: " + df.format(cuota) + "\n Ingresos (30%) = "
                             + df.format(ingreso * 0.3)
                             + "\n\n El prestamo solicitado no se puede realizar, la cuota supera el 30% de sus ingresos.";
-                    if(mesesOptimo > 0){
+                    if (mesesOptimo > 0) {
                         resultado += "\n\n El plazo a partir del cual se encuentra en aptas condiciones es de " + mesesOptimo + " meses.";
-                    }                          
+                    }
                     bandera = 0;
                 } else {
                     resultado = "Prestamo solicitado:\n" + "Monto: " + cantidadPrestamo + "\t Tasa de interes: " + df.format(interes)
@@ -177,7 +194,7 @@ public class CPrestamoDAO {
                             + df.format(ingreso * 0.3)
                             + "\n\n Prestamo solicitado autorizado.";
                     bandera = 1;
-                }                
+                }
             } else {
                 resultado = "0";
             }
@@ -204,6 +221,45 @@ public class CPrestamoDAO {
             obj = new CPrestamo(interes, cuota, meses);
             cuotas.add(obj);
             interes = 0;
+        }
+    }
+    public final void insertPrestamo() {
+        PreparedStatement sentencia = null;
+        final Connection con = conexion.getConnection();
+                double cuota = prestamo.getMonto() * ((prestamo.getTasaInteres() * (Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo()))) / ((Math.pow((1 + prestamo.getTasaInteres()), prestamo.getPlazo())) - 1));
+
+        // insertar los datos del prestamo dentro de la BD
+        try {
+            sentencia = con.prepareStatement("insert into prestamo (Cedula,Interes,Prestamo,Plazo,Cuota) values (?,?,?,?,?)");
+            sentencia.setString(1, cliente.getCedula() );
+            sentencia.setDouble(2, prestamo.getTasaInteres());
+            sentencia.setDouble(3, prestamo.getMonto());
+            sentencia.setInt(4, prestamo.getPlazo());
+            sentencia.setDouble(5,cuota);
+                        
+            sentencia.execute();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+        }
+    }
+    public void insertPrestamo1(String cedula,double interes,double monto,int plazo) {
+        PreparedStatement sentencia = null;
+        final Connection con = conexion.getConnection();
+        // insertar los datos del prestamo dentro de la BD
+        interes = (interes / 100) / 12;
+        double cuota = monto * ((interes * (Math.pow((1 + interes), plazo))) / ((Math.pow((1 + interes), plazo)) - 1));
+
+
+        try {
+            sentencia = con.prepareStatement("insert into prestamo (Cedula,Interes,Prestamo,Plazo,Cuota) values (?,?,?,?,?)");
+            sentencia.setString(1, cedula );
+            sentencia.setDouble(2, interes);
+            sentencia.setDouble(3, monto);
+            sentencia.setInt(4, plazo);
+            sentencia.setDouble(5,cuota);
+            sentencia.execute();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
         }
     }
 }

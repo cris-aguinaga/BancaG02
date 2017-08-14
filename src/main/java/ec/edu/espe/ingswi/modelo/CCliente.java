@@ -46,6 +46,8 @@ public class CCliente {
         this.cedula = cedula;
         this.nombre = nombre;
     }
+     public CCliente() {
+        }
     /**
      * Metodo que obtiene la cedula del cliente.
      * @return 
